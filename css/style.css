@@ -1,0 +1,48 @@
+body {
+  width: 100%;
+  height: 100%;
+
+}
+
+.board {
+  width: 1000px;
+  height: 250px;
+  border: 4px solid black;
+  margin: auto;
+  text-align: center;
+}
+
+.pod {
+  position: relative;
+  border: 1px solid black;
+  border-radius: 50%;
+  border-spacing: 20px;
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+  margin: 10px;
+}
+
+.mancala {
+  border: 1px solid black;
+  border-radius: 30px;
+  position: relative;
+  display: inline-block;
+  height: 220px;
+  width: 100px;
+  margin: 15px 10px;
+}
+
+#divMancala2 {
+
+  float: left;
+}
+
+#divMancala1 {
+  float: right;
+}
+
+#divRows {
+  margin: auto;
+}
+
