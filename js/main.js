@@ -71,39 +71,40 @@ var Mancala = function(value) {
 var mancala1 = new Mancala(0);
 var mancala2 = new Mancala(0);
 
-/*var gameBegin = function() {
-  for (var i = 0; i < board.length; i++) {
-    board[i].value = 4;
+var gameEnd = function() {
+  for (var i = 0; i < 6; i++) {
+    if (board[i].value === 0) {
+      return win = true;
+    }
+  }
+  for (var i = 6; i < 12; i++) {
+    if (board[i].value === 0) {
+      return win=true;
+    }
   }
 }
-*/
-// var gameEnd = function() {
-//   if (for (var i = 0; i < 6; i++) {
-//     board[i].innerHTML = "0";
-//   }) ||
-//   (for (var i = 11; i > 5; i--) {
-//     board[i].innerHTML = "0";
-//   }) {
-//     return win = true;
-//   }
-// }
 
-// var gameWinner = function() {
-//   if (mancala1.value > mancala2.value) {
-//     winner = "Player 1";
-//   } else winner = "Player 2"
-// }
+var gameWinner = function() {
+  if (win = true) {
+    if (mancala1.value > mancala2.value) {
+      winner = "Player 1";
+    } else winner = "Player 2";
+  }
+}
 
 
 // if event listener click's (eventlistenenr (click, function())) {
 var countMove = 0;
 var iterator = 0;
+
 var player1Move = function(jk) {
   countMove = board[jk].value;
   iterator = countMove;
   board[jk].value = 0;
+
   for (var i = 1; i <= countMove; i++){
     if (jk + i > 11 && iterator != 1) {
+
       if(jk + i === 12) {
         mancala1.value++;
         board[jk + i - 12].value++;
@@ -111,13 +112,16 @@ var player1Move = function(jk) {
         board[jk + i - 12].value++; // breaks with 15 or more pebbles on index 10
       }
       iterator--;
-    } else if (iterator!= 1) {
-        if ([jk + i] === 11 && iterator > 0) {
+    }
+
+    else if (iterator!= 1) {
+        if ((jk + i === 11) && (iterator > 0)) {
           mancala1.value++;
         }
-        board[jk + i].value++;
-
+      board[jk + i].value++;
       iterator--;
+    } else if ((jk + i === 12) && (iterator = 1)) {
+      mancala1.value++
     }
   }
 }
@@ -126,16 +130,35 @@ var player2Move = function(jk) {
   countMove = board[jk].value;
   iterator = countMove;
   board[jk].value = 0;
+
   for (var i = 1; i <= countMove; i++){
-    if (jk + i > 11 && iterator != 1) {
-      board[jk + i - 12].value++;
-      iterator--;
-    } else if (iterator!=1) {
+    if (jk + i > 11 && iterator != 0) {
+      if ((jk + i - 12 === 5) && iterator !=0) {
+        mancala2.value++;
+        board[jk + i - 12].value++;
+        iterator -= 2;
+        i++;
+      } else {
+        board[jk + i - 12].value++;
+        iterator--;
+      }
+    }
+
+    else if ((jk + i === 5) && (iterator > 0)) {
+        board[jk + i].value++;
+        mancala2.value++
+        iterator -= 2;
+      }
+    else if (jk === 5 && iterator === 1){
+      mancala2.value++;
+    }
+    else if (iterator != 0) {
       board[jk + i].value++;
       iterator--;
     }
   }
 }
+
 
 
 
