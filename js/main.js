@@ -17,7 +17,7 @@ pod7 = new Pod(4);
 pod8 = new Pod(4);
 pod9 = new Pod(4);
 pod10 = new Pod(4);
-pod11 = new Pod(7);
+pod11 = new Pod(4);
 pod12 = new Pod(4);
 
 
@@ -37,9 +37,13 @@ board[9] = pod10;
 board[10] = pod11;
 board[11] = pod12;
 
-//create jQ var
+
+// for (var i = 0; i < 12; i++){
+//   board[i] = 'pod' + i;
+// }
 
 
+//maybe need variables
 var $pod1 = $('#pod1');
 var $pod2 = $('#pod2');
 var $pod3 = $('#pod3');
@@ -54,7 +58,18 @@ var $pod11 = $('#pod11');
 var $pod12 = $('#pod12');
 
 
-var win = false
+//GLOBAL variables
+var win = false;
+var currentPlayer = "Player 1";
+var $mancala1 = $('#mancala1');
+var $mancala2 = $('#mancala2');
+
+var Mancala = function(value) {
+  this.value = value;
+};
+
+var mancala1 = new Mancala(0);
+var mancala2 = new Mancala(0);
 
 /*var gameBegin = function() {
   for (var i = 0; i < board.length; i++) {
@@ -74,14 +89,40 @@ var win = false
 // }
 
 // var gameWinner = function() {
-//   if ()
+//   if (mancala1.value > mancala2.value) {
+//     winner = "Player 1";
+//   } else winner = "Player 2"
 // }
 
 
 // if event listener click's (eventlistenenr (click, function())) {
 var countMove = 0;
-var iterator =0;
-var chooseastart = function(jk) {
+var iterator = 0;
+var player1Move = function(jk) {
+  countMove = board[jk].value;
+  iterator = countMove;
+  board[jk].value = 0;
+  for (var i = 1; i <= countMove; i++){
+    if (jk + i > 11 && iterator != 1) {
+      if(jk + i === 12) {
+        mancala1.value++;
+        board[jk + i - 12].value++;
+      } else {
+        board[jk + i - 12].value++; // breaks with 15 or more pebbles on index 10
+      }
+      iterator--;
+    } else if (iterator!= 1) {
+        if ([jk + i] === 11 && iterator > 0) {
+          mancala1.value++;
+        }
+        board[jk + i].value++;
+
+      iterator--;
+    }
+  }
+}
+
+var player2Move = function(jk) {
   countMove = board[jk].value;
   iterator = countMove;
   board[jk].value = 0;
@@ -95,5 +136,8 @@ var chooseastart = function(jk) {
     }
   }
 }
+
+
+
 
 
