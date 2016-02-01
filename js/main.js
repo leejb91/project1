@@ -17,7 +17,7 @@ pod7 = new Pod(4);
 pod8 = new Pod(4);
 pod9 = new Pod(4);
 pod10 = new Pod(4);
-pod11 = new Pod(15);
+pod11 = new Pod(4);
 pod12 = new Pod(4);
 
 
@@ -109,6 +109,7 @@ var altMove = function (jk) {
     if (currentPlayer === "Player 1" && seedsInHand === 1 && jk === 11) {
       mancala1.value++;
       seedsInHand--;
+      currentPlayer = "Player 2";
     } else if (currentPlayer === "Player 1" && seedsInHand > 1 && jk === 11) {
         mancala1.value++;
         jk = 0;
@@ -124,6 +125,7 @@ var altMove = function (jk) {
     if (currentPlayer === "Player 2" && seedsInHand === 1 && jk === 5) {
       mancala2.value++;
       seedsInHand--;
+      currentPlayer = "Player 1";
     } else if (currentPlayer === "Player 2" && seedsInHand > 1 && jk === 5) {
         mancala2.value++;
         jk = 0;
@@ -135,12 +137,17 @@ var altMove = function (jk) {
         seedsInHand--;
     }
   }
+  changePlayer();
 }
 
 
-
-
-
+var changePlayer = function() {
+  if (currentPlayer === "Player 1") {
+    currentPlayer = "Player 2";
+  } else if (currentPlayer === "Player 2") {
+    currentPlayer = "Player 1";
+  }
+}
 
 
 
