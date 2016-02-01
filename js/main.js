@@ -17,7 +17,7 @@ pod7 = new Pod(4);
 pod8 = new Pod(4);
 pod9 = new Pod(4);
 pod10 = new Pod(4);
-pod11 = new Pod(4);
+pod11 = new Pod(15);
 pod12 = new Pod(4);
 
 
@@ -94,67 +94,45 @@ var gameWinner = function() {
 
 
 // if event listener click's (eventlistenenr (click, function())) {
+
 var countMove = 0;
 var iterator = 0;
 
-var player1Move = function(jk) {
+var altMove = function (jk) {
+  var seedsInHand = board[jk].value;
   countMove = board[jk].value;
-  iterator = countMove;
   board[jk].value = 0;
 
-  for (var i = 1; i <= countMove; i++){
-    if (jk + i > 11 && iterator != 1) {
+  for (var i = countMove; i > 0; i--) {
 
-      if(jk + i === 12) {
+  //player 1
+    if (currentPlayer === "Player 1" && seedsInHand === 1 && jk === 11) {
+      mancala1.value++;
+      seedsInHand--;
+    } else if (currentPlayer === "Player 1" && seedsInHand > 1 && jk === 11) {
         mancala1.value++;
-        board[jk + i - 12].value++;
-      } else {
-        board[jk + i - 12].value++; // breaks with 15 or more pebbles on index 10
-      }
-      iterator--;
+        jk = 0;
+        board[jk].value++;
+        seedsInHand -= 2;
+    } else if (currentPlayer === "Player 1" && seedsInHand > 0) {
+        jk++;
+        board[jk].value++;
+        seedsInHand--;
     }
 
-    else if (iterator!= 1) {
-        if ((jk + i === 11) && (iterator > 0)) {
-          mancala1.value++;
-        }
-      board[jk + i].value++;
-      iterator--;
-    } else if ((jk + i === 12) && (iterator = 1)) {
-      mancala1.value++
-    }
-  }
-}
-
-var player2Move = function(jk) {
-  countMove = board[jk].value;
-  iterator = countMove;
-  board[jk].value = 0;
-
-  for (var i = 1; i <= countMove; i++){
-    if (jk + i > 11 && iterator != 0) {
-      if ((jk + i - 12 === 5) && iterator !=0) {
-        mancala2.value++;
-        board[jk + i - 12].value++;
-        iterator -= 2;
-        i++;
-      } else {
-        board[jk + i - 12].value++;
-        iterator--;
-      }
-    }
-
-    else if ((jk + i === 5) && (iterator > 0)) {
-        board[jk + i].value++;
-        mancala2.value++
-        iterator -= 2;
-      }
-    else if (jk === 5 && iterator === 1){
+  //player 2
+    if (currentPlayer === "Player 2" && seedsInHand === 1 && jk === 5) {
       mancala2.value++;
-    }
-    else if (iterator != 0) {
-      board[jk + i].value++;
-      iterator--;
+      seedsInHand--;
+    } else if (currentPlayer === "Player 2" && seedsInHand > 1 && jk === 5) {
+        mancala2.value++;
+        jk = 0;
+        board[jk].value++;
+        seedsInHand -=2;
+    } else if (currentPlayer === "Player 2" && seedsInHand > 0) {
+        jk++;
+        board[jk].value++;
+        seedsInHand--;
     }
   }
 }
@@ -164,3 +142,75 @@ var player2Move = function(jk) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+// var player1Move = function(jk) {
+//   countMove = board[jk].value;
+//   iterator = countMove;
+//   board[jk].value = 0;
+
+//   for (var i = 1; i <= countMove; i++){
+//     if (jk + i > 11 && iterator != 1) {
+
+//       if(jk + i === 12) {
+//         mancala1.value++;
+//         board[jk + i - 12].value++;
+//       } else {
+//         board[jk + i - 12].value++; // breaks with 15 or more pebbles on index 10
+//       }
+//       iterator--;
+//     }
+
+//     else if (iterator!= 1) {
+//         if ((jk + i === 11) && (iterator > 0)) {
+//           mancala1.value++;
+//         }
+//       board[jk + i].value++;
+//       iterator--;
+//     } else if ((jk + i === 12) && (iterator = 1)) {
+//       console.log("m1+")
+//       mancala1.value++
+//     }
+//   }
+// }
+
+// var player2Move = function(jk) {
+//   countMove = board[jk].value;
+//   iterator = countMove;
+//   board[jk].value = 0;
+
+//   for (var i = 1; i <= countMove; i++){
+//     if (jk + i > 11 && iterator != 0) {
+//       if ((jk + i - 12 === 5) && iterator !=0) {
+//         mancala2.value++;
+//         board[jk + i - 12].value++;
+//         iterator -= 2;
+//         i++;
+//       } else {
+//         board[jk + i - 12].value++;
+//         iterator--;
+//       }
+//     }
+
+//     else if ((jk + i === 5) && (iterator > 0)) {
+//         board[jk + i].value++;
+//         mancala2.value++
+//         iterator -= 2;
+//       }
+//     else if (jk === 5 && iterator === 1){
+//       mancala2.value++;
+//     }
+//     else if (iterator != 0) {
+//       board[jk + i].value++;
+//       iterator--;
+//     }
+//   }
+// }
