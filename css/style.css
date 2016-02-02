@@ -1,20 +1,36 @@
 body {
   width: 100%;
   height: 100%;
+  background-color: #EEE8AA;
 
 }
 
+header {
+  font-size: 70px;
+  text-align: center;
+  margin: 30px;
+  color: #8B0000;
+  font-weight: bold;
+}
+
+#currentPlayer {
+  font-size: 40px;
+  color: #8B0000;
+  text-align: center;
+  margin: 20px;
+}
+
 .board {
-  width: 1000px;
-  height: 250px;
-  border: 4px solid black;
+  width: 1050px;
+  height: 270px;
+  border: 4px solid #8B0000;
   margin: auto;
   text-align: center;
 }
 
 .pod {
   position: relative;
-  border: 1px solid black;
+  border: 3px solid #8B0000;
   border-radius: 50%;
   border-spacing: 20px;
   display: inline-block;
@@ -24,7 +40,7 @@ body {
 }
 
 .mancala {
-  border: 1px solid black;
+  border: 3px solid #8B0000;
   border-radius: 30px;
   position: relative;
   display: inline-block;
@@ -33,12 +49,12 @@ body {
   margin: 15px 10px;
 }
 
-#divMancala2 {
+#mancala2 {
 
   float: left;
 }
 
-#divMancala1 {
+#mancala1 {
   float: right;
 }
 

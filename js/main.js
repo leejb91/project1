@@ -7,18 +7,18 @@ var Pod = function(value) {
 
 // how to create for loop??
 // var pod + i = new Pod(4) --> invalid '+'
-pod1 = new Pod(4);
-pod2 = new Pod(4);
-pod3 = new Pod(4);
-pod4 = new Pod(4);
-pod5 = new Pod(4);
-pod6 = new Pod(4);
-pod7 = new Pod(4);
-pod8 = new Pod(4);
-pod9 = new Pod(4);
-pod10 = new Pod(4);
-pod11 = new Pod(4);
-pod12 = new Pod(4);
+var pod1 = new Pod(4);
+var pod2 = new Pod(4);
+var pod3 = new Pod(4);
+var pod4 = new Pod(4);
+var pod5 = new Pod(4);
+var pod6 = new Pod(4);
+var pod7 = new Pod(4);
+var pod8 = new Pod(4);
+var pod9 = new Pod(4);
+var pod10 = new Pod(4);
+var pod11 = new Pod(4);
+var pod12 = new Pod(4);
 
 
 //populate board with pod value of 4
@@ -37,25 +37,23 @@ board[9] = pod10;
 board[10] = pod11;
 board[11] = pod12;
 
+// var board = [
+//               [],
+//               []
+//             ];
 
-// for (var i = 0; i < 12; i++){
-//   board[i] = 'pod' + i;
+// // Loop for creating board
+// function startGame() {
+//   for (var i = 0; i < 2; i += 1) {
+//     for(var k = 0; k < 7; k += 1) {
+//       if (k === 6) {
+//         board[i][k] = 0;
+//       } else {
+//         board[i][k] = 4;
+//       }
+//     }
+//   }
 // }
-
-
-//maybe need variables
-var $pod1 = $('#pod1');
-var $pod2 = $('#pod2');
-var $pod3 = $('#pod3');
-var $pod4 = $('#pod4');
-var $pod5 = $('#pod5');
-var $pod6 = $('#pod6');
-var $pod7 = $('#pod7');
-var $pod8 = $('#pod8');
-var $pod9 = $('#pod9');
-var $pod10 = $('#pod10');
-var $pod11 = $('#pod11');
-var $pod12 = $('#pod12');
 
 
 //GLOBAL variables
@@ -97,9 +95,10 @@ var gameWinner = function() {
 
 var countMove = 0;
 var iterator = 0;
+var seedsInHand = 0;
 
-var altMove = function (jk) {
-  var seedsInHand = board[jk].value;
+var move = function (jk) {
+  seedsInHand = board[jk].value;
   countMove = board[jk].value;
   board[jk].value = 0;
 
@@ -119,25 +118,40 @@ var altMove = function (jk) {
         jk++;
         board[jk].value++;
         seedsInHand--;
+    } else if (currentPlayer === "Player 1" && seedsInHand === 0 && board[jk].value === 1) {
+      console.log(jk + "move");
+      eatOpp(jk);
     }
 
   //player 2
     if (currentPlayer === "Player 2" && seedsInHand === 1 && jk === 5) {
+      console.log("1");
       mancala2.value++;
       seedsInHand--;
       currentPlayer = "Player 1";
     } else if (currentPlayer === "Player 2" && seedsInHand > 1 && jk === 5) {
+        console.log("2");
         mancala2.value++;
-        jk = 0;
+        jk++;
         board[jk].value++;
         seedsInHand -=2;
     } else if (currentPlayer === "Player 2" && seedsInHand > 0) {
+        console.log("3");
+        if (jk === 11) {
+          jk = 0;
+          board[jk].value++;
+          seedsInHand--;
+        }
         jk++;
         board[jk].value++;
         seedsInHand--;
+    } else if (currentPlayer === "Player 2" && seedsInHand === 0 && board[jk].value === 1) {
+        console.log("4");
+        eatOpp(jk);
     }
   }
   changePlayer();
+  render();
 }
 
 
@@ -150,74 +164,37 @@ var changePlayer = function() {
 }
 
 
+var eatOpp = function (jk) {
+  if (currentPlayer === "Player 1") {
+    console.log(jk);
+    mancala1.value += board[jk].value + board[11-jk].value;
+  } else {
+    console.log("am i doing this one?");
+    console.log(11-jk);
+    mancala2.value += board[jk].value + board[11-jk].value;
+  }
+  board[11-jk].value = 0;
+  board[jk].value = 0;
+}
 
-
-
-
-
-
-
-
-
-// var player1Move = function(jk) {
-//   countMove = board[jk].value;
-//   iterator = countMove;
-//   board[jk].value = 0;
-
-//   for (var i = 1; i <= countMove; i++){
-//     if (jk + i > 11 && iterator != 1) {
-
-//       if(jk + i === 12) {
-//         mancala1.value++;
-//         board[jk + i - 12].value++;
-//       } else {
-//         board[jk + i - 12].value++; // breaks with 15 or more pebbles on index 10
-//       }
-//       iterator--;
-//     }
-
-//     else if (iterator!= 1) {
-//         if ((jk + i === 11) && (iterator > 0)) {
-//           mancala1.value++;
-//         }
-//       board[jk + i].value++;
-//       iterator--;
-//     } else if ((jk + i === 12) && (iterator = 1)) {
-//       console.log("m1+")
-//       mancala1.value++
-//     }
-//   }
+  // for (var i = 0; boardp1.length; i++) {
+  //   for (var j = 11; boardp2.length; j--) {
+  //       mancala1.value += board[i].value + board[j].value;
+  //       board[i].value = 0;
+  //       board[j].value = 0;
+  //   }
+  // }board[jk]
 // }
 
-// var player2Move = function(jk) {
-//   countMove = board[jk].value;
-//   iterator = countMove;
-//   board[jk].value = 0;
+function render() {
+  $('#currentPlayer').text("Current Player: "+ currentPlayer);
+  for (var i = 0; i < board.length; i += 1) {
+      $('#pod' + (i + 1)).text(board[i].value)
+    }
+  $('#mancala1').text(mancala1.value);
+  $('#mancala2').text(mancala2.value);
+}
 
-//   for (var i = 1; i <= countMove; i++){
-//     if (jk + i > 11 && iterator != 0) {
-//       if ((jk + i - 12 === 5) && iterator !=0) {
-//         mancala2.value++;
-//         board[jk + i - 12].value++;
-//         iterator -= 2;
-//         i++;
-//       } else {
-//         board[jk + i - 12].value++;
-//         iterator--;
-//       }
-//     }
+render();
 
-//     else if ((jk + i === 5) && (iterator > 0)) {
-//         board[jk + i].value++;
-//         mancala2.value++
-//         iterator -= 2;
-//       }
-//     else if (jk === 5 && iterator === 1){
-//       mancala2.value++;
-//     }
-//     else if (iterator != 0) {
-//       board[jk + i].value++;
-//       iterator--;
-//     }
-//   }
-// }
+
