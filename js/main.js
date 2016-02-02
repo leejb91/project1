@@ -118,8 +118,8 @@ var move = function (jk) {
         jk++;
         board[jk].value++;
         seedsInHand--;
-    } else if (currentPlayer === "Player 1" && seedsInHand === 0 && board[jk].value === 1) {
-      console.log(jk + "move");
+    } else if (currentPlayer === "Player 1" && seedsInHand === 0 && board[jk].value === 1 && ((6 <= jk) && (jk <= 11))) {
+      console.log(jk);
       eatOpp(jk);
     }
 
@@ -145,8 +145,8 @@ var move = function (jk) {
         jk++;
         board[jk].value++;
         seedsInHand--;
-    } else if (currentPlayer === "Player 2" && seedsInHand === 0 && board[jk].value === 1) {
-        console.log("4");
+    } else if (currentPlayer === "Player 2" && seedsInHand === 0 && board[jk].value === 1 && ((0 <= jk) && (jk <= 5))) {
+        console.log(jk);
         eatOpp(jk);
     }
   }
@@ -166,11 +166,8 @@ var changePlayer = function() {
 
 var eatOpp = function (jk) {
   if (currentPlayer === "Player 1") {
-    console.log(jk);
     mancala1.value += board[jk].value + board[11-jk].value;
   } else {
-    console.log("am i doing this one?");
-    console.log(11-jk);
     mancala2.value += board[jk].value + board[11-jk].value;
   }
   board[11-jk].value = 0;

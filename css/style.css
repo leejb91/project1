@@ -28,15 +28,35 @@ header {
   text-align: center;
 }
 
+#divRows {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 .pod {
   position: relative;
   border: 3px solid #8B0000;
   border-radius: 50%;
   border-spacing: 20px;
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   height: 100px;
   width: 100px;
   margin: 10px;
+  color: #8B0000;
+  font-size: 50px;
+}
+
+.num {
+  margin-top: 15px;
+}
+
+.manNum {
+  margin-top: 80px;
 }
 
 .mancala {
@@ -47,6 +67,8 @@ header {
   height: 220px;
   width: 100px;
   margin: 15px 10px;
+  color: #8B0000;
+  font-size: 50px;
 }
 
 #mancala2 {
