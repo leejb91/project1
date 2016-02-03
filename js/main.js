@@ -1,66 +1,60 @@
 //GLOBAL variables
-var win = false;
-var winner = "";
-var currentPlayer = "Player 1";
+var win //= false;
+var winner //= "";
+var currentPlayer //= "Player 1";
 
 var Pod = function(value) {
   this.value = value;
 }
 
-var mancala1 = new Pod(0);
-var mancala2 = new Pod(0);
+// intializing variables
 
-// how to create for loop??
-var pod0 = new Pod(4);
-var pod1 = new Pod(4);
-var pod2 = new Pod(4);
-var pod3 = new Pod(4);
-var pod4 = new Pod(4);
-var pod5 = new Pod(4);
-var pod6 = new Pod(4);
-var pod7 = new Pod(4);
-var pod8 = new Pod(4);
-var pod9 = new Pod(4);
-var pod10 = new Pod(4);
-var pod11 = new Pod(4);
+var mancala1// = new Pod(0);
+var mancala2// = new Pod(0);
+
+var pod1 //= new Pod(4);
+var pod2 //= new Pod(4);
+var pod3 //= new Pod(4);
+var pod4 //= new Pod(4);
+var pod5 //= new Pod(4);
+var pod6 //= new Pod(4);
+var pod7 //= new Pod(4);
+var pod8 //= new Pod(4);
+var pod9 //= new Pod(4);
+var pod10// = new Pod(4);
+var pod11// = new Pod(4);
 
 
-//populate board with pod value of 4
-var board = [pod0, pod1, pod2, pod3, pod4, pod5,
-            pod6, pod7, pod8, pod9, pod10, pod11];
+var board;
 
 var startGame = function() {
-  var board = [pod0, pod1, pod2, pod3, pod4, pod5,
-               pod6, pod7, pod8, pod9, pod10, pod11];
+  win = false;
+  winner = "";
+  currentPlayer = "Player 1";
 
+  mancala1 = new Pod(0);
+  mancala2 = new Pod(0);
 
-  var mancala1 = new Pod(0);
-  var mancala2 = new Pod(0);
+  pod0 = new Pod(4);
+  pod1 = new Pod(4);
+  pod2 = new Pod(4);
+  pod3 = new Pod(4);
+  pod4 = new Pod(4);
+  pod5 = new Pod(4);
+  pod6 = new Pod(4);
+  pod7 = new Pod(4);
+  pod8 = new Pod(4);
+  pod9 = new Pod(4);
+  pod10 = new Pod(4);
+  pod11 = new Pod(4);
 
-  var pod0 = new Pod(4);
-  var pod1 = new Pod(4);
-  var pod2 = new Pod(4);
-  var pod3 = new Pod(4);
-  var pod4 = new Pod(4);
-  var pod5 = new Pod(4);
-  var pod6 = new Pod(4);
-  var pod7 = new Pod(4);
-  var pod8 = new Pod(4);
-  var pod9 = new Pod(4);
-  var pod10 = new Pod(4);
-  var pod11 = new Pod(4);
+  board = [pod0, pod1, pod2, pod3, pod4, pod5,
+           pod6, pod7, pod8, pod9, pod10, pod11];
 
   clickOn();
+  updateMoveCSS();
   render();
 }
-
-// // Loop for creating board
-// function startGame() {
-//   for (var i = 0; i < 12; i += 1) {
-//     board.push(board[i].value = 4);
-//   }
-// }
-
 
 var countMove = 0;
 var iterator = 0;
@@ -68,6 +62,7 @@ var seedsInHand = 0;
 
 
 var move = function (index) {
+  console.log(index);
   seedsInHand = board[index].value;
   countMove = board[index].value;
   board[index].value = 0;
@@ -121,13 +116,17 @@ var move = function (index) {
         eatOpp(index);
     }
   }
+  gameEnd();
+  gameWinner();
+  console.log("before change player");
   changePlayer(index);
+  render();
 }
 
 function invalid (index) {
-  if (currentPlayer === "Player 1" && index >= 6) {
+  if ((currentPlayer === "Player 1" && index >= 6) & board[index].value != 0) {
     move(index);
-  } else if (currentPlayer === "Player 2" && index <= 5) {
+  } else if ((currentPlayer === "Player 2" && index <= 5) && board[index].value != 0) {
     move(index);
   } else alert("Pick your own side!");
 }
@@ -155,7 +154,13 @@ function changePlayer(index) {
 }
 
 function updateMoveCSS() {
-
+  if (currentPlayer === "Player 1") {
+    $(".player1").removeClass("lock");
+    $(".player2").addClass("lock");
+  } else {
+    $(".player2").removeClass("lock");
+    $(".player1").addClass("lock");
+  }
 }
 
 var eatOpp = function (index) {
@@ -226,20 +231,10 @@ function clickOn() {
     event.preventDefault();
     var index = parseInt(event.target.id.slice(3));
     invalid(index);
-    gameEnd();
-    gameWinner();
-    render();
   });
 }
 
-// document.getElementById("button").addEventListener("click", console.log("hi"))
+startGame();
 
-render();
-clickOn();
-// $(".player2").off();
+$("#restart").on("click", startGame);
 
-// proper startGame()
-// restart button
-// changing players with turning off event listeners for other player OR
-// not allowing event listeners if currentPlayer = "fawefa"
-// my signature is odd position after adding button
