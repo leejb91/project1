@@ -66,7 +66,6 @@ var countMove = 0;
 var iterator = 0;
 var seedsInHand = 0;
 
-  //player 1
 
 var move = function (index) {
   seedsInHand = board[index].value;
@@ -125,31 +124,39 @@ var move = function (index) {
   changePlayer(index);
 }
 
+function invalid (index) {
+  if (currentPlayer === "Player 1" && index >= 6) {
+    move(index);
+  } else if (currentPlayer === "Player 2" && index <= 5) {
+    move(index);
+  } else alert("Pick your own side!");
+}
 
 function changePlayer(index) {
   if (currentPlayer === "Player 1") {
     if (seedsInHand === -1 && index === 11) {
       console.log("player goes again");
       currentPlayer = "Player 1";
-      // $(".player2").off();
     } else {
       currentPlayer = "Player 2";
       console.log("I am supposed to change players");
-      // $(".player1").off();
     }
   } else if (currentPlayer === "Player 2") {
     if (seedsInHand === -1 && index === 5) {
       console.log("player goes again");
       currentPlayer = "Player 2";
-      // $(".player1").off();
     } else {
       currentPlayer = "Player 1";
       console.log("I am supposed to change players");
-      // $(".player2").off();
     }
   }
+  //update legal move css
+  updateMoveCSS();
 }
 
+function updateMoveCSS() {
+
+}
 
 var eatOpp = function (index) {
   if (currentPlayer === "Player 1") {
@@ -160,8 +167,6 @@ var eatOpp = function (index) {
   board[11-index].value = 0;
   board[index].value = 0;
 }
-
-
 
 
 function gameEnd() {
@@ -193,6 +198,7 @@ function gameEnd() {
   }
 }
 
+
 function gameWinner() {
   if (win === true) {
     if (mancala1.value > mancala2.value) {
@@ -219,7 +225,7 @@ function clickOn() {
   $('.pod').on('click', function(event) {
     event.preventDefault();
     var index = parseInt(event.target.id.slice(3));
-    move(index);
+    invalid(index);
     gameEnd();
     gameWinner();
     render();

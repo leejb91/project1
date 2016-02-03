@@ -71,6 +71,10 @@ header {
 
 }
 
+.pod.lock:hover {
+
+}
+
 .mancala {
   font-family: 'Cinzel', serif;
   border: 3px solid #8B0000;
