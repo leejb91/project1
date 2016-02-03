@@ -13,7 +13,16 @@ header {
   font-weight: bold;
 }
 
-#currentPlayer, #winner {
+.player {
+  display: relative;
+  font-family: 'Cinzel', serif;
+  font-size: 40px;
+  color: #8B0000;
+  text-align: center;
+  margin: 20px;
+}
+
+#winner {
   font-family: 'Cinzel', serif;
   font-size: 40px;
   color: #8B0000;
@@ -55,7 +64,7 @@ header {
   font-size: 50px;
 }
 
-.pod:hover {
+.pod:hover, #buttonDiv:hover {
   background-color: #8B0000;
   color: #EEE8AA;
   cursor: pointer;
@@ -92,9 +101,16 @@ header {
 }
 
 #buttonDiv {
-  width: 100%;
+  font-family: 'Cinzel', serif;
+  font-size: 30px;
+  width: 150px;
+  height: 40px;
   text-align: center;
   margin: 20px auto;
+  background-color: #8B0000;
+  color: #EEE8AA;
+  cursor: pointer;
+
 }
 
 #signature {

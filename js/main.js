@@ -68,67 +68,67 @@ var seedsInHand = 0;
 
   //player 1
 
-var move = function (jk) {
-  seedsInHand = board[jk].value;
-  countMove = board[jk].value;
-  board[jk].value = 0;
+var move = function (index) {
+  seedsInHand = board[index].value;
+  countMove = board[index].value;
+  board[index].value = 0;
 
   for (var i = countMove; i >= 0; i--) {
 
-    if (currentPlayer === "Player 1" && seedsInHand === 1 && jk === 11) {
+    if (currentPlayer === "Player 1" && seedsInHand === 1 && index === 11) {
       // console.log("1");
       mancala1.value++;
       seedsInHand = -1;
-    } else if (currentPlayer === "Player 1" && seedsInHand > 1 && jk === 11) {
+    } else if (currentPlayer === "Player 1" && seedsInHand > 1 && index === 11) {
         // console.log("2");
         mancala1.value++;
-        jk = 0;
-        board[jk].value++;
+        index = 0;
+        board[index].value++;
         seedsInHand -= 2;
     } else if (currentPlayer === "Player 1" && seedsInHand > 0) {
         // console.log("3");
-        jk++;
-        board[jk].value++;
+        index++;
+        board[index].value++;
         seedsInHand--;
     } else if (currentPlayer === "Player 1" && seedsInHand === 0
-              && board[jk].value === 1 && ((6 <= jk) && (jk <= 11))
-              && board[11-jk].value > 0) {
-      eatOpp(jk);
+              && board[index].value === 1 && ((6 <= index) && (index <= 11))
+              && board[11-index].value > 0) {
+      eatOpp(index);
     }
 
-    if (currentPlayer === "Player 2" && seedsInHand === 1 && jk === 5) {
+    if (currentPlayer === "Player 2" && seedsInHand === 1 && index === 5) {
       // console.log("1");
       mancala2.value++;
       seedsInHand = -1;
-    } else if (currentPlayer === "Player 2" && seedsInHand > 1 && jk === 5) {
+    } else if (currentPlayer === "Player 2" && seedsInHand > 1 && index === 5) {
         // console.log("2");
         mancala2.value++;
-        jk++;
-        board[jk].value++;
+        index++;
+        board[index].value++;
         seedsInHand -=2;
     } else if (currentPlayer === "Player 2" && seedsInHand > 0) {
         // console.log("3");
-        if (jk === 11) {
-          jk = 0;
-          board[jk].value++;
+        if (index === 11) {
+          index = 0;
+          board[index].value++;
           seedsInHand--;
         }
-        jk++;
-        board[jk].value++;
+        index++;
+        board[index].value++;
         seedsInHand--;
     } else if (currentPlayer === "Player 2" && seedsInHand === 0
-              && board[jk].value === 1 && ((0 <= jk) && (jk <= 5))
-              && board[11-jk].value > 0) {
-        eatOpp(jk);
+              && board[index].value === 1 && ((0 <= index) && (index <= 5))
+              && board[11-index].value > 0) {
+        eatOpp(index);
     }
   }
-  changePlayer(jk);
+  changePlayer(index);
 }
 
 
-function changePlayer(jk) {
+function changePlayer(index) {
   if (currentPlayer === "Player 1") {
-    if (seedsInHand === -1 && jk === 11) {
+    if (seedsInHand === -1 && index === 11) {
       console.log("player goes again");
       currentPlayer = "Player 1";
       // $(".player2").off();
@@ -138,7 +138,7 @@ function changePlayer(jk) {
       // $(".player1").off();
     }
   } else if (currentPlayer === "Player 2") {
-    if (seedsInHand === -1 && jk === 5) {
+    if (seedsInHand === -1 && index === 5) {
       console.log("player goes again");
       currentPlayer = "Player 2";
       // $(".player1").off();
@@ -146,19 +146,19 @@ function changePlayer(jk) {
       currentPlayer = "Player 1";
       console.log("I am supposed to change players");
       // $(".player2").off();
-  }
+    }
   }
 }
 
 
-var eatOpp = function (jk) {
+var eatOpp = function (index) {
   if (currentPlayer === "Player 1") {
-    mancala1.value += board[jk].value + board[11-jk].value;
+    mancala1.value += board[index].value + board[11-index].value;
   } else {
-    mancala2.value += board[jk].value + board[11-jk].value;
+    mancala2.value += board[index].value + board[11-index].value;
   }
-  board[11-jk].value = 0;
-  board[jk].value = 0;
+  board[11-index].value = 0;
+  board[index].value = 0;
 }
 
 
@@ -218,8 +218,8 @@ function render() {
 function clickOn() {
   $('.pod').on('click', function(event) {
     event.preventDefault();
-    var jk = parseInt(event.target.id.slice(3));
-    move(jk);
+    var index = parseInt(event.target.id.slice(3));
+    move(index);
     gameEnd();
     gameWinner();
     render();
