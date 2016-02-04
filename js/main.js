@@ -247,4 +247,5 @@ $("#restart").on("click", startGame);
 
 // sound files
 var wooHoo = new Audio('./assets/woohoo.mp3');
+wooHoo.currentTime = 1;
 
