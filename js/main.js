@@ -54,6 +54,7 @@ var startGame = function() {
   clickOn();
   updateMoveCSS();
   render();
+  $('#winner').remove();
 }
 
 var countMove = 0;
@@ -72,10 +73,12 @@ var move = function (index) {
     if (currentPlayer === "Player 1" && seedsInHand === 1 && index === 11) {
       // console.log("1");
       mancala1.value++;
+      wooHoo.play();
       seedsInHand = -1;
     } else if (currentPlayer === "Player 1" && seedsInHand > 1 && index === 11) {
         // console.log("2");
         mancala1.value++;
+        wooHoo.play();
         index = 0;
         board[index].value++;
         seedsInHand -= 2;
@@ -93,10 +96,12 @@ var move = function (index) {
     if (currentPlayer === "Player 2" && seedsInHand === 1 && index === 5) {
       // console.log("1");
       mancala2.value++;
+      wooHoo.play();
       seedsInHand = -1;
     } else if (currentPlayer === "Player 2" && seedsInHand > 1 && index === 5) {
         // console.log("2");
         mancala2.value++;
+        wooHoo.play();
         index++;
         board[index].value++;
         seedsInHand -=2;
@@ -124,11 +129,11 @@ var move = function (index) {
 }
 
 function invalid (index) {
-  if ((currentPlayer === "Player 1" && index >= 6) & board[index].value != 0) {
+  if ((currentPlayer === "Player 1" && index >= 6) && board[index].value != 0) {
     move(index);
   } else if ((currentPlayer === "Player 2" && index <= 5) && board[index].value != 0) {
     move(index);
-  } else alert("Pick your own side!");
+  }
 }
 
 function changePlayer(index) {
@@ -166,8 +171,10 @@ function updateMoveCSS() {
 var eatOpp = function (index) {
   if (currentPlayer === "Player 1") {
     mancala1.value += board[index].value + board[11-index].value;
+    wooHoo.play();
   } else {
     mancala2.value += board[index].value + board[11-index].value;
+    wooHoo.play();
   }
   board[11-index].value = 0;
   board[index].value = 0;
@@ -237,4 +244,7 @@ function clickOn() {
 startGame();
 
 $("#restart").on("click", startGame);
+
+// sound files
+var wooHoo = new Audio('./assets/woohoo.mp3');
 
