@@ -73,12 +73,12 @@ var move = function (index) {
     if (currentPlayer === "Player 1" && seedsInHand === 1 && index === 11) {
       // console.log("1");
       mancala1.value++;
-      wooHoo.play();
+      fadeInRight();
       seedsInHand = -1;
     } else if (currentPlayer === "Player 1" && seedsInHand > 1 && index === 11) {
         // console.log("2");
         mancala1.value++;
-        wooHoo.play();
+        fadeInRight();
         index = 0;
         board[index].value++;
         seedsInHand -= 2;
@@ -96,12 +96,12 @@ var move = function (index) {
     if (currentPlayer === "Player 2" && seedsInHand === 1 && index === 5) {
       // console.log("1");
       mancala2.value++;
-      wooHoo.play();
+      fadeInLeft();
       seedsInHand = -1;
     } else if (currentPlayer === "Player 2" && seedsInHand > 1 && index === 5) {
         // console.log("2");
         mancala2.value++;
-        wooHoo.play();
+        fadeInLeft();
         index++;
         board[index].value++;
         seedsInHand -=2;
@@ -158,23 +158,43 @@ function changePlayer(index) {
   updateMoveCSS();
 }
 
+function fadeInLeft() {
+  $(".left").text("+1").fadeIn("slow").fadeOut("slow");
+}
+
+function fadeInRight() {
+  $(".right").text("+1").fadeIn("slow").fadeOut("slow");
+
+}
+
 function updateMoveCSS() {
   if (currentPlayer === "Player 1") {
     $(".player1").removeClass("lock");
     $(".player2").addClass("lock");
+    $("#playerOne").addClass("currentPlayer");
+    $("#playerTwo").removeClass("currentPlayer");
   } else {
     $(".player2").removeClass("lock");
     $(".player1").addClass("lock");
+    $("#playerTwo").addClass("currentPlayer");
+    $("#playerOne").removeClass("currentPlayer");
+
   }
 }
 
 var eatOpp = function (index) {
   if (currentPlayer === "Player 1") {
     mancala1.value += board[index].value + board[11-index].value;
-    wooHoo.play();
+    $(".right").text("+" + (board[index].value + board[11-index].value)).fadeIn("slow").fadeOut("slow");
+    console.log(index);
+    console.log(board[index].value);
+    console.log(board[11-index].value);
   } else {
     mancala2.value += board[index].value + board[11-index].value;
-    wooHoo.play();
+    $(".left").text("+" + (board[index].value + board[11-index].value)).fadeIn("slow").fadeOut("slow");
+    console.log(index);
+    console.log(board[index].value);
+    console.log(board[11-index].value);
   }
   board[11-index].value = 0;
   board[index].value = 0;
@@ -244,8 +264,4 @@ function clickOn() {
 startGame();
 
 $("#restart").on("click", startGame);
-
-// sound files
-var wooHoo = new Audio('./assets/woohoo.mp3');
-wooHoo.currentTime = 1;
 
