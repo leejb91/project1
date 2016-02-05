@@ -51,11 +51,14 @@ var startGame = function() {
   board = [pod0, pod1, pod2, pod3, pod4, pod5,
            pod6, pod7, pod8, pod9, pod10, pod11];
 
-  clickOn();
   updateMoveCSS();
+  setUpBoard.play();
   render();
   $('#winner').remove();
 }
+
+clickOn();
+
 
 var countMove = 0;
 var iterator = 0;
@@ -63,7 +66,6 @@ var seedsInHand = 0;
 
 
 var move = function (index) {
-  console.log(index);
   seedsInHand = board[index].value;
   countMove = board[index].value;
   board[index].value = 0;
@@ -73,11 +75,13 @@ var move = function (index) {
     if (currentPlayer === "Player 1" && seedsInHand === 1 && index === 11) {
       // console.log("1");
       mancala1.value++;
+      mancalaSound.play();
       fadeInRight();
       seedsInHand = -1;
     } else if (currentPlayer === "Player 1" && seedsInHand > 1 && index === 11) {
         // console.log("2");
         mancala1.value++;
+        mancalaPlus.play();
         fadeInRight();
         index = 0;
         board[index].value++;
@@ -86,6 +90,7 @@ var move = function (index) {
         // console.log("3");
         index++;
         board[index].value++;
+        plusOne.play();
         seedsInHand--;
     } else if (currentPlayer === "Player 1" && seedsInHand === 0
               && board[index].value === 1 && ((6 <= index) && (index <= 11))
@@ -96,11 +101,13 @@ var move = function (index) {
     if (currentPlayer === "Player 2" && seedsInHand === 1 && index === 5) {
       // console.log("1");
       mancala2.value++;
+      mancalaSound.play();
       fadeInLeft();
       seedsInHand = -1;
     } else if (currentPlayer === "Player 2" && seedsInHand > 1 && index === 5) {
         // console.log("2");
         mancala2.value++;
+        mancalaPlus.play();
         fadeInLeft();
         index++;
         board[index].value++;
@@ -110,10 +117,12 @@ var move = function (index) {
         if (index === 11) {
           index = 0;
           board[index].value++;
+          plusOne.play();
           seedsInHand--;
         }
         index++;
         board[index].value++;
+        plusOne.play();
         seedsInHand--;
     } else if (currentPlayer === "Player 2" && seedsInHand === 0
               && board[index].value === 1 && ((0 <= index) && (index <= 5))
@@ -123,7 +132,6 @@ var move = function (index) {
   }
   gameEnd();
   gameWinner();
-  console.log("before change player");
   changePlayer(index);
   render();
 }
@@ -133,7 +141,12 @@ function invalid (index) {
     move(index);
   } else if ((currentPlayer === "Player 2" && index <= 5) && board[index].value != 0) {
     move(index);
-  }
+  } else if ((currentPlayer === "Player 1" && (index < 6))
+    || (currentPlayer === "Player 2" && (index > 5))
+    || board[index].value === 0) {
+    invalidSound.play()
+    console.log("INVALID MOVE")
+  };
 }
 
 function changePlayer(index) {
@@ -186,15 +199,11 @@ var eatOpp = function (index) {
   if (currentPlayer === "Player 1") {
     mancala1.value += board[index].value + board[11-index].value;
     $(".right").text("+" + (board[index].value + board[11-index].value)).fadeIn("slow").fadeOut("slow");
-    console.log(index);
-    console.log(board[index].value);
-    console.log(board[11-index].value);
+    capture.play();
   } else {
     mancala2.value += board[index].value + board[11-index].value;
     $(".left").text("+" + (board[index].value + board[11-index].value)).fadeIn("slow").fadeOut("slow");
-    console.log(index);
-    console.log(board[index].value);
-    console.log(board[11-index].value);
+    capture.play();
   }
   board[11-index].value = 0;
   board[index].value = 0;
@@ -216,7 +225,6 @@ function gameEnd() {
        board[10].value === 0 &&
        board[11].value === 0)) {
     win = true;
-    $(".pod").off();
 
     for (var i = 0; i <= 5; i++) {
       mancala2.value += board[i].value;
@@ -238,7 +246,7 @@ function gameWinner() {
     } else if (mancala2.value > mancala1.value) {
       winner = "Player 2";
     } else { winner = "It's a TIE!!"
-    } $('body').append($('<div id="winner">').text("The winner is " + winner + "!!"));
+    } $('body').append($('<div id="winner">').text("The winner is " + winner + "!!").fadeIn("slow"));
   }
 }
 
@@ -260,6 +268,14 @@ function clickOn() {
     invalid(index);
   });
 }
+
+// sounds
+var plusOne = new Audio("./assets/plusOne.wav");
+var mancalaPlus = new Audio("./assets/mancalaPlus.wav");
+var capture = new Audio("./assets/capture.wav");
+var invalidSound = new Audio("./assets/invalid.wav");
+var mancalaSound = new Audio("./assets/mancala.wav");
+var setUpBoard = new Audio("./assets/setUpBoard.wav");
 
 startGame();
 
