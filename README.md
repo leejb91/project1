@@ -10,11 +10,11 @@ Mancala is a family of board games played around the world, sometimes called "so
 - Javascript/jQuery.
 
 ##Design
-
+I wanted the minimalistic look; therefore, I implemented few visuals as to not distract from the game, also utilizing only 1 color and different backgrounds.
 
 ##Get Started
 1. Open up your web browser.
-2. Input link fakwhfalkwejf.
+2. Input link http://leejb91.github.io/project1/.
 
 
 ##General Gameplay
@@ -38,3 +38,5 @@ Most mancala games share a common general game play. Players begin by placing a 
 2. Personalize gameplay by allowing players to input name.
 3. Replace numbers with pebbles/stones.
 4. Animate movement of pebbles/stones when moved into pods/mancalas.
+
+[Trello Link](https://trello.com/b/AJqcxihl/project-1-mancala)
