@@ -7,22 +7,22 @@ var Pod = function(value) {
   this.value = value;
 }
 
-// intializing variables
+// intializing board
 
-var mancala1// = new Pod(0);
-var mancala2// = new Pod(0);
+var mancala1;
+var mancala2;
 
-var pod1 //= new Pod(4);
-var pod2 //= new Pod(4);
-var pod3 //= new Pod(4);
-var pod4 //= new Pod(4);
-var pod5 //= new Pod(4);
-var pod6 //= new Pod(4);
-var pod7 //= new Pod(4);
-var pod8 //= new Pod(4);
-var pod9 //= new Pod(4);
-var pod10// = new Pod(4);
-var pod11// = new Pod(4);
+var pod1;
+var pod2;
+var pod3;
+var pod4;
+var pod5;
+var pod6;
+var pod7;
+var pod8;
+var pod9;
+var pod10;
+var pod11;
 
 
 var board;
@@ -57,29 +57,32 @@ var startGame = function() {
   $('#winner').remove();
 }
 
+// start click event
 clickOn();
 
 
+// initializing game
 var countMove = 0;
 var iterator = 0;
 var seedsInHand = 0;
 
 
 var move = function (index) {
+  // utilize value from clicked pod
   seedsInHand = board[index].value;
   countMove = board[index].value;
   board[index].value = 0;
 
+  // loop through value of clicked pod
   for (var i = countMove; i >= 0; i--) {
 
+    // loop for player 1
     if (currentPlayer === "Player 1" && seedsInHand === 1 && index === 11) {
-      // console.log("1");
       mancala1.value++;
       mancalaSound.play();
       fadeInRight();
       seedsInHand = -1;
     } else if (currentPlayer === "Player 1" && seedsInHand > 1 && index === 11) {
-        // console.log("2");
         mancala1.value++;
         mancalaPlus.play();
         fadeInRight();
@@ -87,7 +90,6 @@ var move = function (index) {
         board[index].value++;
         seedsInHand -= 2;
     } else if (currentPlayer === "Player 1" && seedsInHand > 0) {
-        // console.log("3");
         index++;
         board[index].value++;
         plusOne.play();
@@ -98,14 +100,13 @@ var move = function (index) {
       eatOpp(index);
     }
 
+    // loop for player 2
     if (currentPlayer === "Player 2" && seedsInHand === 1 && index === 5) {
-      // console.log("1");
       mancala2.value++;
       mancalaSound.play();
       fadeInLeft();
       seedsInHand = -1;
     } else if (currentPlayer === "Player 2" && seedsInHand > 1 && index === 5) {
-        // console.log("2");
         mancala2.value++;
         mancalaPlus.play();
         fadeInLeft();
@@ -113,7 +114,6 @@ var move = function (index) {
         board[index].value++;
         seedsInHand -=2;
     } else if (currentPlayer === "Player 2" && seedsInHand > 0) {
-        // console.log("3");
         if (index === 11) {
           index = 0;
           board[index].value++;
@@ -145,7 +145,6 @@ function invalid (index) {
     || (currentPlayer === "Player 2" && (index > 5))
     || board[index].value === 0) {
     invalidSound.play()
-    console.log("INVALID MOVE")
   };
 }
 
@@ -167,7 +166,6 @@ function changePlayer(index) {
       console.log("I am supposed to change players");
     }
   }
-  //update legal move css
   updateMoveCSS();
 }
 
